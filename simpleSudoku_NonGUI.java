@@ -54,9 +54,9 @@ public class simpleSudoku_NonGUI {
      */
     public static void printSudokuBoard(int[][] board) {
 
-        // iterates through columns
+        // iterates through rows
         for (int i = 0;i < 9; i++) {
-            // iterates through row
+            // iterates through columns
             for (int j = 0;j < 9;j++) {
                 if (j == 0){
                     System.out.print("|");
@@ -70,6 +70,9 @@ public class simpleSudoku_NonGUI {
                 
             }
             System.out.println();
+            if (i % 3 == 2) {
+                System.out.println("-------------------");
+            }
         }
 
     }
