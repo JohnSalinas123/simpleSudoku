@@ -1,4 +1,4 @@
-import javax.sound.midi.Soundbank;
+
 
 /**
  * Program that solves a given valid sudoku puzzle using backtracking algorithm.
@@ -28,8 +28,8 @@ public class simpleSudoku_NonGUI {
 
     /**
      * Finds an empty spot on the sudoku board.
-     * @param board
-     * @return
+     * @param board The given sudoku board.
+     * @return A integer array(size 2), has cords for empty spot on board.
      */
     private static int[] locateEmpty(int[][] board) {
         int[] cords = new int[2];
@@ -81,8 +81,17 @@ public class simpleSudoku_NonGUI {
      * @return A 2D array, the solved sudoku board.
      */
     private static boolean solveSudoku_Recursive(int[][] sudokuBoard) {
-      
+        int row = 0;
+        int col = 0;
         
+        int[] boardCords = locateEmpty(sudokuBoard);
+        
+        if (locateEmpty(sudokuBoard) == null) {
+            return true;
+        } else {
+            row = boardCords[0];
+            col = boardCords[1];
+        }
 
 
         for(int i = 1;i < 10; i++) {
@@ -95,9 +104,7 @@ public class simpleSudoku_NonGUI {
             }
 
         }
-
         sudokuBoard[row][col] = 0;
-
 
         return false;
     }
@@ -176,19 +183,12 @@ public class simpleSudoku_NonGUI {
         System.out.println("The unsolved sudoku board: ");
         printSudokuBoard(sudokuBoard);
         System.out.println();
-
-        //int[][] copyBoard = copySudoku(sudokuBoard);
-        //printSudokuBoard(copyBoard);
-
         
         System.out.println("The solved sudoku board: ");
         solveSudoku_Recursive(sudokuBoard);
         printSudokuBoard(sudokuBoard);
         System.out.println();
 
-        
-
-        //System.out.println(checkIfValid_SudokuNum(sudokuBoard, 8,6));
         
     }
 
