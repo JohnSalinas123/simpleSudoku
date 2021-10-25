@@ -5,6 +5,18 @@
 
 public class simpleSudoku_NonGUI {
 
+    // Will complete if needed.
+    /**
+     * Copies a given sudoku board.
+     * @param board The given sudoku board to copy.
+     * @return A new 2D array, with the copied contents.
+     */
+    public static int[][] copySudoku(int[][] board) {
+
+
+        return null;
+    }
+
     /**
      * Prints the given sudoku board (two dimensional array)
      */
@@ -29,6 +41,21 @@ public class simpleSudoku_NonGUI {
         }
 
     }
+
+    /**
+     * Solves a given sudoku board, using backtracking algorithm.
+     * @param unsolved The given unsolved sudoku board.
+     * @return A 2D array, the solved sudoku board.
+     */
+    public static int[][] solveSudokuBoard(int[][] unsolved) {
+        // For now, references the same object as input parameter
+        int[][] result = unsolved;
+
+        
+        
+
+        return result;
+    }
     
     public static void main(String []args) {
 
@@ -44,8 +71,18 @@ public class simpleSudoku_NonGUI {
         ,{0,0,0,0,5,3,9,4,0}
         ,{8,3,0,0,9,0,0,0,2}};
 
+        System.out.println("The unsolved sudoku board: ");
         printSudokuBoard(sudokuBoard);
+        System.out.println();
 
+        System.out.println("The solved sudoku board: ");
+        int [][] solvedSudoku = solveSudokuBoard(sudokuBoard);
+        printSudokuBoard(solvedSudoku);
+        System.out.println();
+
+
+
+        
     }
 
 }
