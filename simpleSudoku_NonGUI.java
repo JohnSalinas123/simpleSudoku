@@ -46,9 +46,9 @@ public class simpleSudoku_NonGUI {
      * Calls solveSudokuBoard_Recursive, initializing to first spot on sudoku board.
      * @param unsolved THe given unsolved sudoku board.
      */
-    public static int[][] solveSudokuBoard(int[][] unsolved) {
+    public static void solveSudokuBoard(int[][] unsolved) {
         
-        return solveSudoku_Recursive(unsolved,0,0,0,0);
+        solveSudoku_Recursive(unsolved,0,0);
         
     }
 
@@ -57,26 +57,45 @@ public class simpleSudoku_NonGUI {
      * @param unsolved The given unsolved sudoku board.
      * @return A 2D array, the solved sudoku board.
      */
-    private static int[][] solveSudoku_Recursive(int[][] unsolved, int row, int col, int rowPrev, int colPrev) {
-        // For now, references the same object as input parameter
-        int[][] result = unsolved;
-        int testNum;
-        boolean numFound = false;
+    private static boolean solveSudoku_Recursive(int[][] sudokuBoard, int row, int col) {
+        System.out.println("(" + row + "," + col + ")");
+
+        if (col >= 8) {
+            if (row != 8) {
+                solveSudoku_Recursive(sudokuBoard, row + 1, 0);
+            } else {
+                return false;
+            }
+        }
 
         for(int i = 1;i < 10; i++) {
-            testNum = i;
-            if (checkIfValid_SudokuNum(result, row, col)) {
-                
+            sudokuBoard[row][col] = i;
+
+            if (checkIfValid_SudokuNum(sudokuBoard, row, col)) {
+                if (solveSudoku_Recursive(sudokuBoard, row, col + 1)) {
+                    return true;
+                }
             }
 
         }
 
+        sudokuBoard[row][col] = 0;
 
-        
-        
-        
 
-        return result;
+        return false;
+    }
+
+    /**
+     * Find out if given spot is one of the original ignored numbers
+     * @param testBoard
+     * @param row
+     * @param col
+     * @return
+     */
+    public static boolean ignoredSpot(int[][] testBoard, int row, int col) {
+
+
+        return false;
     }
 
 
@@ -104,7 +123,7 @@ public class simpleSudoku_NonGUI {
 
         if (validNum == true) {
             // Compare num to entire colum
-            for(int i = 0; i < 10; i++) {
+            for(int i = 0; i < 9; i++) {
                 if (i != row) {
                     if (testBoard[i][col] == num) {
                         validNum = false;
@@ -128,7 +147,6 @@ public class simpleSudoku_NonGUI {
                         } 
                     }
                 }
-                System.out.println();
             }
 
         }
@@ -154,13 +172,13 @@ public class simpleSudoku_NonGUI {
         printSudokuBoard(sudokuBoard);
         System.out.println();
 
-        //System.out.println("The solved sudoku board: ");
-        //int[][] solvedSudoku = solveSudokuBoard(sudokuBoard);
-        //printSudokuBoard(solvedSudoku);
-        //System.out.println();
+        System.out.println("The solved sudoku board: ");
+        solveSudokuBoard(sudokuBoard);
+        printSudokuBoard(sudokuBoard);
+        System.out.println();
 
         
-        System.out.println(checkIfValid_SudokuNum(sudokuBoard, 8,6));
+        //System.out.println(checkIfValid_SudokuNum(sudokuBoard, 8,6));
         
     }
 
