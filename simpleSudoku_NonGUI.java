@@ -1,3 +1,5 @@
+import javax.sound.midi.Soundbank;
+
 /**
  * Program that solves a given valid sudoku puzzle using backtracking algorithm.
  * This version is purely text based, for purposes of learning the logic.
@@ -5,14 +7,44 @@
 
 public class simpleSudoku_NonGUI {
 
-    // Will complete if needed.
     /**
      * Copies a given sudoku board.
      * @param board The given sudoku board to copy.
      * @return A new 2D array, with the copied contents.
      */
     public static int[][] copySudoku(int[][] board) {
+        int[][] copy = new int[9][9];
 
+        // iterates through columns
+        for (int i = 0;i < 9; i++) {
+            // iterates through row
+            for (int j = 0;j < 9;j++) {
+                copy[i][j] = board[i][j];
+            }
+        }
+
+        return copy;
+    }
+
+    /**
+     * Finds an empty spot on the sudoku board.
+     * @param board
+     * @return
+     */
+    private static int[] locateEmpty(int[][] board) {
+        int[] cords = new int[2];
+
+        // iterates through columns
+        for (int i = 0;i < 9; i++) {
+            // iterates through row
+            for (int j = 0;j < 9;j++) {
+                if (board[i][j] == 0) {
+                    cords[0] = i;
+                    cords[1] = j;
+                    return cords;
+                }
+            }
+        }
 
         return null;
     }
@@ -42,37 +74,22 @@ public class simpleSudoku_NonGUI {
 
     }
 
-    /**
-     * Calls solveSudokuBoard_Recursive, initializing to first spot on sudoku board.
-     * @param unsolved THe given unsolved sudoku board.
-     */
-    public static void solveSudokuBoard(int[][] unsolved) {
-        
-        solveSudoku_Recursive(unsolved,0,0);
-        
-    }
 
     /**
      * Solves a given sudoku board, using backtracking algorithm.
      * @param unsolved The given unsolved sudoku board.
      * @return A 2D array, the solved sudoku board.
      */
-    private static boolean solveSudoku_Recursive(int[][] sudokuBoard, int row, int col) {
-        System.out.println("(" + row + "," + col + ")");
+    private static boolean solveSudoku_Recursive(int[][] sudokuBoard) {
+      
+        
 
-        if (col >= 8) {
-            if (row != 8) {
-                solveSudoku_Recursive(sudokuBoard, row + 1, 0);
-            } else {
-                return false;
-            }
-        }
 
         for(int i = 1;i < 10; i++) {
             sudokuBoard[row][col] = i;
 
             if (checkIfValid_SudokuNum(sudokuBoard, row, col)) {
-                if (solveSudoku_Recursive(sudokuBoard, row, col + 1)) {
+                if (solveSudoku_Recursive(sudokuBoard)) {
                     return true;
                 }
             }
@@ -85,18 +102,6 @@ public class simpleSudoku_NonGUI {
         return false;
     }
 
-    /**
-     * Find out if given spot is one of the original ignored numbers
-     * @param testBoard
-     * @param row
-     * @param col
-     * @return
-     */
-    public static boolean ignoredSpot(int[][] testBoard, int row, int col) {
-
-
-        return false;
-    }
 
 
     /**
@@ -172,12 +177,17 @@ public class simpleSudoku_NonGUI {
         printSudokuBoard(sudokuBoard);
         System.out.println();
 
+        //int[][] copyBoard = copySudoku(sudokuBoard);
+        //printSudokuBoard(copyBoard);
+
+        
         System.out.println("The solved sudoku board: ");
-        solveSudokuBoard(sudokuBoard);
+        solveSudoku_Recursive(sudokuBoard);
         printSudokuBoard(sudokuBoard);
         System.out.println();
 
         
+
         //System.out.println(checkIfValid_SudokuNum(sudokuBoard, 8,6));
         
     }
